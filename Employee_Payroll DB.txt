@@ -1,0 +1,106 @@
+mysql> CREATE DATABASE payroll_service;
+Query OK, 1 row affected (0.07 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| payroll_service    |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.03 sec)
+
+mysql> use payroll_service;
+Database changed
+
+mysql> create table employee_payroll (
+    -> id int auto_increment primary key,
+    -> name varchar(150) not null,
+    -> salary decimal(8,2) not null,
+    -> start_date date);
+Query OK, 0 rows affected (0.96 sec)
+
+mysql> insert into employee_payroll(name, salary, start_date) values
+    -> ("Kunal",100000.00,"2021-11-01"),
+    -> ("Pratik",200000.00,"2020-08-22"),
+    -> ("Sanjay",300000.00,"2019-05-15");
+Query OK, 3 rows affected (0.18 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee_payroll;
++----+--------+-----------+------------+
+| id | name   | salary    | start_date |
++----+--------+-----------+------------+
+|  1 | Kunal  | 100000.00 | 2021-11-01 |
+|  2 | Pratik | 200000.00 | 2020-08-22 |
+|  3 | Sanjay | 300000.00 | 2019-05-15 |
++----+--------+-----------+------------+
+3 rows in set (0.01 sec)
+
+mysql> select salary from employee_payroll where name = "Kunal";
++-----------+
+| salary    |
++-----------+
+| 100000.00 |
++-----------+
+1 row in set (0.01 sec)
+
+mysql> alter table employee_payroll add gender char not null after name;
+Query OK, 0 rows affected (1.56 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee_payroll;
++----+--------+--------+-----------+------------+
+| id | name   | gender | salary    | start_date |
++----+--------+--------+-----------+------------+
+|  1 | Kunal  |        | 100000.00 | 2021-11-01 |
+|  2 | Pratik |        | 200000.00 | 2020-08-22 |
+|  3 | Sanjay |        | 300000.00 | 2019-05-15 |
++----+--------+--------+-----------+------------+
+3 rows in set (0.00 sec)
+
+mysql> update employee_payroll set gender ="M" where name = "Kunal" or name ="Pratik" or name ="Sanjay";
+Query OK, 3 rows affected (0.04 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> select * from employee_payroll;
++----+--------+--------+-----------+------------+
+| id | name   | gender | salary    | start_date |
++----+--------+--------+-----------+------------+
+|  1 | Kunal  | M      | 100000.00 | 2021-11-01 |
+|  2 | Pratik | M      | 200000.00 | 2020-08-22 |
+|  3 | Sanjay | M      | 300000.00 | 2019-05-15 |
++----+--------+--------+-----------+------------+
+3 rows in set (0.01 sec)
+
+mysql> update employee_payroll set salary = 200000.00 where id=1;
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select avg(salary) from employee_payroll group by gender;
++---------------+
+| avg(salary)   |
++---------------+
+| 233333.333333 |
++---------------+
+1 row in set (0.03 sec)
+
+mysql> select max(salary) from employee_payroll group by gender;
++-------------+
+| max(salary) |
++-------------+
+|   300000.00 |
++-------------+
+1 row in set (0.03 sec)
+
+mysql> select min(salary) from employee_payroll group by gender;
++-------------+
+| min(salary) |
++-------------+
+|   200000.00 |
++-------------+
+1 row in set (0.01 sec)
+
