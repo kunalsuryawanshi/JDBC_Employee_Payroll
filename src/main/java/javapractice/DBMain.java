@@ -1,3 +1,6 @@
+/*
+ * @author: KUNAL SURYAWANSHI
+ */
 package javapractice;
 
 import java.sql.Connection;
@@ -11,6 +14,9 @@ public class DBMain {
     static String userName = "root";
     static String password = "1234";
 
+    /*
+     * Purpose : To create employee payroll service database connectivity
+     */
     public static void main(String[] args) {
         Connection connection;
         try {
@@ -31,6 +37,9 @@ public class DBMain {
 
     }
 
+    /*
+     * Purpose : To check all the drivers registered with jdbc driver
+     */
     private static void listDrivers() {
         Enumeration<Driver> driverList = DriverManager.getDrivers();
         while (driverList.hasMoreElements()) {
